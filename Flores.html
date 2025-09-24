@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Te amo</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: radial-gradient(circle at top, #0b0c10, #1f2833);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      flex-direction: column;
+      color: white;
+    }
+    h1 {
+      font-size: 3rem;
+      color: #ff99cc;
+      margin-bottom: 20px;
+      text-align: center;
+      animation: latido 2s infinite;
+    }
+    @keyframes latido {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+    button {
+      padding: 12px 24px;
+      font-size: 1.2rem;
+      background-color: #ffcc00;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+    button:hover {
+      background-color: #ffaa00;
+      transform: scale(1.1);
+    }
+
+    #animacion {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100%;
+      position: relative;
+    }
+
+    /* Globo mejorado */
+    .globo {
+      width: 70px;
+      height: 90px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), transparent 40%), red;
+      border-radius: 50% 50% 45% 45%;
+      position: absolute;
+      bottom: -100px;
+      animation: flotar 12s linear forwards;
+      box-shadow: inset -5px -10px 15px rgba(0,0,0,0.3), 0 5px 15px rgba(0,0,0,0.4);
+    }
+    .globo::after {
+      content: "";
+      width: 2px;
+      height: 60px;
+      background: #444;
+      position: absolute;
+      top: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    @keyframes flotar {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-120vh) scale(1.2); opacity: 0; }
+    }
+
+    /* Flor mejorada */
+    .flor {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      top: -100px;
+      animation: caer 10s linear forwards;
+    }
+    .petalo {
+      width: 50px;
+      height: 80px;
+      background: radial-gradient(circle at 20% 20%, #fff9a8, #ffd700);
+      border-radius: 50%;
+      position: absolute;
+      top: 20px;
+      left: 35px;
+      box-shadow: inset -5px -10px 15px rgba(0,0,0,0.2);
+    }
+    .petalo:nth-child(1) { transform: rotate(0deg) translateY(-35px); }
+    .petalo:nth-child(2) { transform: rotate(72deg) translateY(-35px); }
+    .petalo:nth-child(3) { transform: rotate(144deg) translateY(-35px); }
+    .petalo:nth-child(4) { transform: rotate(216deg) translateY(-35px); }
+    .petalo:nth-child(5) { transform: rotate(288deg) translateY(-35px); }
+    .centro {
+      width: 40px;
+      height: 40px;
+      background: radial-gradient(circle, #ffae42, #cc8400);
+      border-radius: 50%;
+      position: absolute;
+      top: 40px;
+      left: 40px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    .tallo {
+      width: 8px;
+      height: 60px;
+      background: linear-gradient(to bottom, #2ecc71, #145a32);
+      position: absolute;
+      top: 100px;
+      left: 56px;
+      border-radius: 4px;
+    }
+    @keyframes caer {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(120vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Corazones */
+    .corazon {
+      position: absolute;
+      animation: subir 6s linear forwards;
+      opacity: 0.9;
+    }
+    @keyframes subir {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
+    }
+
+    #mensajeFinal {
+      display: none;
+      position: absolute;
+      bottom: 20%;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px 40px;
+      border-radius: 20px;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #ff1493;
+      animation: aparecer 2s ease-in-out forwards, brillar 2s infinite ease-in-out;
+    }
+    @keyframes aparecer {
+      0% { opacity: 0; transform: scale(0.5) rotate(-20deg); }
+      50% { opacity: 1; transform: scale(1.2) rotate(10deg); }
+      100% { opacity: 1; transform: scale(1) rotate(0deg); }
+    }
+  </style>
+</head>
+<body>
+  <div id="inicio">
+    <h1>💖 Te amo 💖</h1>
+    <button onclick="mostrarAnimacion()">Haz clic aquí</button>
+  </div>
+
+  <div id="animacion">
+    <audio id="musica" autoplay loop>
+      <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+    </audio>
+    <div id="mensajeFinal">✨ Eres mi todo 💕 ✨</div>
+  </div>
+
+  <script>
+    function mostrarAnimacion() {
+      document.getElementById("inicio").style.display = "none";
+      document.getElementById("animacion").style.display = "flex";
+
+      // Globos
+      setInterval(() => {
+        const globo = document.createElement("div");
+        globo.className = "globo";
+        globo.style.left = Math.random() * window.innerWidth + "px";
+        globo.style.background = `radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), transparent 40%), ${["red", "blue", "green", "pink", "purple"][Math.floor(Math.random() * 5)]}`;
+        document.body.appendChild(globo);
+        setTimeout(() => globo.remove(), 12000);
+      }, 1600);
+
+      // Flores
+      setInterval(() => {
+        const flor = document.createElement("div");
+        flor.className = "flor";
+        flor.style.left = Math.random() * window.innerWidth + "px";
+        for (let i = 0; i < 5; i++) {
+          const petalo = document.createElement("div");
+          petalo.className = "petalo";
+          flor.appendChild(petalo);
+        }
+        const centro = document.createElement("div");
+        centro.className = "centro";
+        flor.appendChild(centro);
+        const tallo = document.createElement("div");
+        tallo.className = "tallo";
+        flor.appendChild(tallo);
+        document.body.appendChild(flor);
+        setTimeout(() => flor.remove(), 10000);
+      }, 2000);
+
+      // Corazones
+      setInterval(() => {
+        const corazon = document.createElement("div");
+        corazon.className = "corazon";
+        corazon.innerHTML = "❤️";
+        corazon.style.left = Math.random() * window.innerWidth + "px";
+        corazon.style.bottom = "0px";
+        corazon.style.fontSize = ["1.5rem","2rem","2.5rem","3rem"][Math.floor(Math.random()*4)];
+        document.body.appendChild(corazon);
+        setTimeout(() => corazon.remove(), 6000);
+      }, 1000);
+
+      // Mensaje final
+      setTimeout(() => {
+        document.getElementById("mensajeFinal").style.display = "block";
+      }, 8000);
+    }
+  </script>
+</body>
+</html>
